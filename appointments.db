@@ -1,0 +1,22 @@
+<?php
+
+$db = new SQLite3('appointments.db');
+
+// Get data from POST request (Make sure these values are sanitized to prevent SQL Injection)
+$customerName = $_POST['customerName'];
+$makeupName = $_POST['makeupName'];
+$makeupArtist = $_POST['makeupArtist'];
+$appointmentTime = $_POST['appointmentTime'];
+$appointmentDate = $_POST['appointmentDate'];
+
+// Insert the appointment into the table
+$query = "INSERT INTO appointments (customer_name, makeup_name, makeup_artist, appointment_time, appointment_date)
+          VALUES ('$customerName', '$makeupName', '$makeupArtist', '$appointmentTime', '$appointmentDate')";
+
+if ($db->exec($query)) {
+    echo json_encode(['message' => 'Appointment created successfully']);
+} else {
+    echo json_encode(['message' => 'Failed to create appointment']);
+}
+
+?>
